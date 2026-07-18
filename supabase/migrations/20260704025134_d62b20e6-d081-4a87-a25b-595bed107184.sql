@@ -1,0 +1,11 @@
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.profiles TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.fields TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.crop_yields TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.app_ratings TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.advice_history TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.diagnosis_history TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.diagnosis_feedback TO authenticated;
+GRANT SELECT ON public.user_roles TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.admin_crops TO authenticated;
+GRANT SELECT ON public.admin_crops TO anon;
+GRANT ALL ON public.profiles, public.fields, public.crop_yields, public.app_ratings, public.advice_history, public.diagnosis_history, public.diagnosis_feedback, public.user_roles, public.admin_crops TO service_role;

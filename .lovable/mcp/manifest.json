@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://gsncxxjfpsuithrsajzn.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "kisaan-mithra-mcp",
+      "version": "0.1.0",
+      "title": "Kisaan Mithra"
+    },
+    "tools": [
+      {
+        "name": "list_fields",
+        "title": "List my fields",
+        "description": "List all farm fields the signed-in farmer has saved in Kisaan Mithra, with crop, area, soil type, and GPS coordinates.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_irrigation_advice",
+        "title": "Get irrigation advice",
+        "description": "Get AI-generated irrigation advice (whether to water today, when rain is expected, how much) for a farm. Provide either a saved field_id, or crop + lat + lon directly. Reply language defaults to the farmer's saved profile language.",
+        "annotations": {
+          "readOnlyHint": true,
+          "openWorldHint": true
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "field_id": {
+              "description": "UUID of a saved field from list_fields. Overrides crop/lat/lon if given.",
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "crop": {
+              "description": "Crop name, e.g. 'tomato', 'wheat'.",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            },
+            "lat": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "lon": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            },
+            "language": {
+              "description": "Response language code.",
+              "type": "string",
+              "enum": [
+                "en",
+                "hi",
+                "mr",
+                "ta",
+                "te",
+                "kn",
+                "bn",
+                "pa"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_recent_advice",
+        "title": "List recent irrigation advice",
+        "description": "Return the farmer's most recent saved irrigation advice entries.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "description": "Max entries to return (default 10).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_recent_diagnoses",
+        "title": "List recent plant disease diagnoses",
+        "description": "Return the farmer's most recent saved plant disease diagnoses.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "limit": {
+              "description": "Max entries to return (default 10).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_crop_yields",
+        "title": "List crop yield records",
+        "description": "List the farmer's recorded crop yields (crop, season, sowing/harvest dates, kg harvested, income).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
